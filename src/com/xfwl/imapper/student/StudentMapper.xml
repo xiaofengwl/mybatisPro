@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- mapper 为根元素节点， 一个namespace对应一个业务处理类 -->
+<mapper namespace="com.xfwl.imapper.student.StudentMapper">
+	<resultMap type="studentMapper" id="student">
+		<id property="st_id" column="st_id"/>
+		<result property="st_name" column="st_name"/>
+		<result property="st_age" column="st_age"/>
+		<result property="st_ren" column="st_ren"/>
+		<result property="st_others" column="st_others"/>
+		<result property="st_email" column="st_email"/>
+		<result property="st_address" column="st_address"/>
+		<result property="st_sex" column="st_sex" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+	</resultMap>
+	<!-- 新增信息 -->
+	<insert id="insertStudent" parameterType="studentMapper">
+		insert into student(st_id,st_name,st_age,st_ren,st_others,st_email,st_address,st_sex)
+		values(#{st_id},#{st_name},#{st_age},#{st_ren},#{st_others},#{st_email},#{st_address},#{st_sex})
+	</insert>
+	<!-- 删除信息 -->
+	<delete id="delStudent" parameterType="student">
+		delete from student where st_id=#{st_id}
+	</delete>
+	<!-- 更新信息 -->
+	<update id="updateStudent" parameterType="student">
+		update student 
+		set
+			st_name=#{st_name},
+			st_age=#{st_age},
+			st_ren=#{st_ren},
+			st_others=#{st_others},
+			st_email=#{st_email},
+			st_address=#{st_address}
+		where st_id=#{st_id}	
+	</update>
+	<!-- 查询指定信息 1-->
+	<select id="qryStudentById" parameterType="student" resultType="student"  >
+		select st_id,st_name,st_age,st_ren,st_others,st_email,st_address,st_sex
+		from student
+		where st_id=#{st_id}	
+	</select>
+	<!-- 查询指定信息 2-->
+	<select id="qryStudentById2" parameterType="string"  resultType="student">
+		select st_id,st_name,st_age,st_ren,st_others,st_email,st_address
+		from student
+		where st_id=#{st_id}	
+	</select>
+	<!-- 查询指定信息 3 concat('%',#{st_name},'%') 	-->
+	<select id="qryStudentsByName" parameterType="string"  resultType="hashmap">
+		select st_id,st_name,st_age,st_ren,st_others,st_email,st_address
+		from student
+		where st_name like concat('%',#{st_name,typeHandler=com.xfwl.sys.types.MyStringTypeHandler},'%')
+	</select>
+	<!-- 查询指定信息 4-->
+	<select id="qryAllStudent"  resultType="hashmap">
+		select st_id,st_name,st_age,st_ren,st_others,st_email,st_address
+		from student
+	</select>
+	<!-- 查询指定信息 5     模糊查询：concat('%',#{st_name},'%')或者'%${st_name}%'-->
+	<select id="qryStudentByMult" parameterType="map" resultType="hashmap">
+		select st_id,st_name,st_age,st_ren,st_others,st_email,st_address
+		from student
+		where st_name like '%${st_name,jdbcType=VARCHAR,javaType=string}%'  or  st_id=#{st_id}
+	</select>
+	<!-- 查询指定信息6     模糊查询：concat('%',#{st_name},'%')或者'%${st_name}%'-->
+	<select id="qryStudentByMultParam" resultType="hashmap">
+		select st_id,st_name,st_age,st_ren,st_others,st_email,st_address
+		from student
+		where st_name like '%${st_name}%'  or  st_id=#{st_id}
+	</select>
+	
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- mybatis-config.xml基础配置文件：配置项顺序不能颠倒，否则会启动异常 -->
+<configuration>
+
+ 	<!-- 引入公共的*.properties文件 -->
+    <properties resource="db.properties"></properties><!-- 引入数据库连接配置文件 -->
+    <!-- 设置 -->
+    <settings>
+    	<setting name="autoMappingBehavior" value="PARTIAL"/><!-- 配置自动映射：默认PARTIAL -->
+    </settings>    
+    <!-- 别名设置 -->
+    <typeAliases>
+   		 <typeAlias type="com.xfwl.imapper.role.RoleMapper"  alias="roleMapper"/><!-- 指定別名 -->
+   		 <typeAlias type="com.xfwl.imapper.student.StudentMapper"  alias="studentMapper"/><!-- 指定別名 -->
+   		 <package name="com.xfwl.pojo"/><!-- 扫描包定义别名：首字母小写 -->
+    </typeAliases>
+    <!-- 类型转换器设置 -->
+    <typeHandlers>
+    	<!-- 指定类型转换器 -->
+    	<!-- <typeHandler jdbcType="VARCHAR" javaType="string" handler="com.xfwl.sys.types.MyStringTypeHandler"/> -->
+    	<package name="com.xfwl.sys.types"/><!-- 扫描包配置类型转换器 -->
+    </typeHandlers>
+    <!-- 环境配置 -->
+    <environments default="development">
+        <environment id="development"><!-- 环境变量 -->
+	        <transactionManager type="JDBC"/><!-- 事务管理器 -->
+	        <dataSource type="POOLED"><!-- 数据源参数 -->
+	            <property name="driver" value="${db.driverClass}"/>
+	            <property name="url" value="${db.url}"/>
+	            <property name="username" value="${db.username}"/>
+	            <property name="password" value="${db.password}"/>
+	        </dataSource>
+   		 </environment>
+    </environments>
+    <!-- 业务映射xml文件设置 -->
+    <mappers>
+        <mapper resource="com/xfwl/imapper/role/RoleMapper.xml"/>
+        <mapper resource="com/xfwl/imapper/student/StudentMapper.xml"/>
+    </mappers>
+ 
+</configuration>

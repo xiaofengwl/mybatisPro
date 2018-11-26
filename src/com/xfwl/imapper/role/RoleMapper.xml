@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- mapper 为根元素节点， 一个namespace对应一个业务处理类 -->
+<mapper namespace="com.xfwl.imapper.role.RoleMapper">
+	
+	<!-- 新增角色信息 -->
+	<insert id="insertRole" parameterType="role">
+		insert into role(rid,rname,rage,raddress,rlevel,rren) 
+		values(#{rid},#{rname},#{rage},#{raddress},#{rlevel},#{rren})
+	</insert>
+	<!-- 删除角色信息 -->
+	<delete id="deleteRole" parameterType="role">
+		delete from role where id=#{rid}
+	</delete>
+	<!-- 更新角色信息 -->
+	<update id="updateRole" parameterType="role">
+		update role set rname=#{rname},rage=#{rage},raddress=#{raddress},rlevel=#{rlevel},rren=#{rren}
+		where rid=#{rid}
+	</update>
+	<!-- 查询指定角色信息 -->
+	<select id="getRole" parameterType="string" resultType="role" >
+		select rid,rname,rage,raddress,rlevel,rren from role where rid=#{rid}
+	</select>
+	<!-- 根据名称模糊查询角色信息 -->
+	<select id="findRoles" parameterType="string"  resultType="hashmap">
+		select rid,rname,rage,raddress,rlevel,rren from role where rname like concat('%',#{rname},'%')
+	</select>
+</mapper>
