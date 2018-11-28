@@ -11,6 +11,8 @@ import org.junit.Test;
 import com.xfwl.imapper.student.StudentMapper;
 import com.xfwl.pojo.Student;
 import com.xfwl.pojo.enums.SexEnum;
+import com.xfwl.pojo.params.PageParams;
+import com.xfwl.pojo.params.StudentParams;
 import com.xfwl.sqlsessionfactory.SqlSessionFactoryUtils;
 
 /**
@@ -26,7 +28,7 @@ public class StudentTest {
 	private void initData(){
 		//准备数据
 		student=new Student();
-		student.setSt_id("100005");
+		student.setSt_id("100008");
 		student.setSt_age("22");
 		student.setSt_name("xfwl3");
 		student.setSt_ren("pritty");
@@ -66,11 +68,17 @@ public class StudentTest {
 		System.out.println(flag?"数据删除成功":"数据删除失败");		
 		session.commit();	
 	}
-	@Test
 	public void qryStudentById(){//查询数据：by-id
 		initData();
 		StudentMapper stundetMapper=session.getMapper(StudentMapper.class);
 		Student stu=stundetMapper.qryStudentById(student);
+		System.out.println(stu);
+	}
+	@Test
+	public void qryStudentById2(){//查询数据：by-id
+		initData();
+		StudentMapper stundetMapper=session.getMapper(StudentMapper.class);
+		Student stu=stundetMapper.qryStudentById2(student.getSt_id());
 		System.out.println(stu);
 	}
 	public void qryStudentsByName(){//查询数据：by-name:测试自定义类型转换器
@@ -98,6 +106,17 @@ public class StudentTest {
 		initData();
 		StudentMapper stundetMapper=session.getMapper(StudentMapper.class);
 		List<Student> list=stundetMapper.qryStudentByMultParam("吕军","100003");
+		System.out.println(Arrays.toString(list.toArray()));
+	}
+	public void qryStudengByCofParam(){//混合查询1
+		initData();
+		StudentParams params=new StudentParams();
+		params.setSt_name("军");
+		PageParams pages=new PageParams();
+		pages.setStart(0);
+		pages.setLimit(2);		
+		StudentMapper stundetMapper=session.getMapper(StudentMapper.class);
+		List<Student> list=stundetMapper.qryStudengByCofParam(params,pages);
 		System.out.println(Arrays.toString(list.toArray()));
 	}
 

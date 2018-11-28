@@ -12,7 +12,7 @@
     <!-- 别名设置 -->
     <typeAliases>
    		 <typeAlias type="com.xfwl.imapper.role.RoleMapper"  alias="roleMapper"/><!-- 指定別名 -->
-   		 <typeAlias type="com.xfwl.imapper.student.StudentMapper"  alias="studentMapper"/><!-- 指定別名 -->
+   		<!--  <typeAlias type="com.xfwl.imapper.student.StudentMapper"  alias="studentMapper"/>指定別名 -->
    		 <package name="com.xfwl.pojo"/><!-- 扫描包定义别名：首字母小写 -->
     </typeAliases>
     <!-- 类型转换器设置 -->

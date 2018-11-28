@@ -2,7 +2,8 @@
 <!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <!-- mapper 为根元素节点， 一个namespace对应一个业务处理类 -->
 <mapper namespace="com.xfwl.imapper.student.StudentMapper">
-	<resultMap type="studentMapper" id="student">
+	<!-- type:数据类型（支持别名），id:引用关键唯一性标识 -->
+	<resultMap type="student" id="studentMap">
 		<id property="st_id" column="st_id"/>
 		<result property="st_name" column="st_name"/>
 		<result property="st_age" column="st_age"/>
@@ -12,8 +13,12 @@
 		<result property="st_address" column="st_address"/>
 		<result property="st_sex" column="st_sex" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
 	</resultMap>
+	<!-- sql：当前文件，一次编写，随处引用 -->
+	<sql id="selectParams">
+		st_id,st_name,st_age,st_ren,st_others,st_email,st_address
+	</sql>
 	<!-- 新增信息 -->
-	<insert id="insertStudent" parameterType="studentMapper">
+	<insert id="insertStudent" parameterType="student">
 		insert into student(st_id,st_name,st_age,st_ren,st_others,st_email,st_address,st_sex)
 		values(#{st_id},#{st_name},#{st_age},#{st_ren},#{st_others},#{st_email},#{st_address},#{st_sex})
 	</insert>
@@ -34,14 +39,14 @@
 		where st_id=#{st_id}	
 	</update>
 	<!-- 查询指定信息 1-->
-	<select id="qryStudentById" parameterType="student" resultType="student"  >
+	<select id="qryStudentById" parameterType="student" resultMap="studentMap" >
 		select st_id,st_name,st_age,st_ren,st_others,st_email,st_address,st_sex
 		from student
 		where st_id=#{st_id}	
 	</select>
-	<!-- 查询指定信息 2-->
+	<!-- 查询指定信息 2：引用sql编写的sql语句-->
 	<select id="qryStudentById2" parameterType="string"  resultType="student">
-		select st_id,st_name,st_age,st_ren,st_others,st_email,st_address
+		select <include refid="selectParams"/>
 		from student
 		where st_id=#{st_id}	
 	</select>
@@ -68,5 +73,24 @@
 		from student
 		where st_name like '%${st_name}%'  or  st_id=#{st_id}
 	</select>
+	<!-- 查询指定信息7     -->
+	<select id="qryStudengByCofParam" resultType="hashmap">
+		select st_id,st_name,st_age,st_ren,st_others,st_email,st_address
+		from student
+		where st_name like '%${params.st_name}%' 
+		limit #{pages.start},#{pages.limit}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>

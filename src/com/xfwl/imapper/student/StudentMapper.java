@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.type.Alias;
 
 import com.xfwl.pojo.Student;
+import com.xfwl.pojo.params.PageParams;
+import com.xfwl.pojo.params.StudentParams;
 @Alias("studentMapper")
 public interface StudentMapper {
 	/**
@@ -38,7 +40,7 @@ public interface StudentMapper {
 	 * @param stuId
 	 * @return
 	 */
-	public Student qryStudentById(String stuId);
+	public Student qryStudentById2(String stuId);
 	/**
 	 * 模糊查询学生信息
 	 * @param stuName
@@ -63,5 +65,12 @@ public interface StudentMapper {
 	 * @return
 	 */
 	public List<Student> qryStudentByMultParam(@Param("st_name") String stuName,@Param("st_id") String stuId);
+	/**
+	 * 混合使用注解查询数据集合
+	 * @param params
+	 * @param pages
+	 * @return
+	 */
+	public List<Student> qryStudengByCofParam(@Param("params")StudentParams params,@Param("pages") PageParams pages);
 	
 }

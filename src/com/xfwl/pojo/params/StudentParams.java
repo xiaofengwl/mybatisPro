@@ -1,11 +1,13 @@
-package com.xfwl.pojo;
-
-import org.apache.ibatis.type.Alias;
+package com.xfwl.pojo.params;
 
 import com.xfwl.pojo.enums.SexEnum;
 
-@Alias("student")
-public class Student {	
+/**
+ * 学生类的参数类
+ * @author Jason、lvjun2@yusys.com
+ * @dateTime 2018年11月27日下午2:39:10
+ */
+public class StudentParams {
 	  private String st_id;  	//id
 	  private String st_name; 	//名称
 	  private String st_age ;	//年龄
@@ -63,13 +65,5 @@ public class Student {
 		}
 		public void setSt_sex(SexEnum st_sex) {
 			this.st_sex = st_sex;
-		}
-		@Override
-		public String toString() {
-			return "Student [st_id=" + st_id + ", st_name=" + st_name
-					+ ", st_age=" + st_age + ", st_ren=" + st_ren
-					+ ", st_others=" + st_others + ", st_email=" + st_email
-					+ ", st_address=" + st_address 
-					+ ", st_sex=" + st_sex.getSexId() +"]";
 		}
 }
