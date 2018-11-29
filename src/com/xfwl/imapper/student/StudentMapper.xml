@@ -3,7 +3,7 @@
 <!-- mapper 为根元素节点， 一个namespace对应一个业务处理类 -->
 <mapper namespace="com.xfwl.imapper.student.StudentMapper">
 	<!-- type:数据类型（支持别名），id:引用关键唯一性标识 -->
-	<resultMap type="student" id="studentMap">
+	<resultMap id="studentMap" type="student">
 		<id property="st_id" column="st_id"/>
 		<result property="st_name" column="st_name"/>
 		<result property="st_age" column="st_age"/>
@@ -45,7 +45,7 @@
 		where st_id=#{st_id}	
 	</select>
 	<!-- 查询指定信息 2：引用sql编写的sql语句-->
-	<select id="qryStudentById2" parameterType="string"  resultType="student">
+	<select id="qryStudentById2" parameterType="string"  resultMap="studentMap">
 		select <include refid="selectParams"/>
 		from student
 		where st_id=#{st_id}	
@@ -57,7 +57,7 @@
 		where st_name like concat('%',#{st_name,typeHandler=com.xfwl.sys.types.MyStringTypeHandler},'%')
 	</select>
 	<!-- 查询指定信息 4-->
-	<select id="qryAllStudent"  resultType="hashmap">
+	<select id="qryAllStudent"  resultMap="studentMap" >
 		select st_id,st_name,st_age,st_ren,st_others,st_email,st_address
 		from student
 	</select>
@@ -67,7 +67,10 @@
 		from student
 		where st_name like '%${st_name,jdbcType=VARCHAR,javaType=string}%'  or  st_id=#{st_id}
 	</select>
-	<!-- 查询指定信息6     模糊查询：concat('%',#{st_name},'%')或者'%${st_name}%'-->
+	<!-- 查询指定信息6     模糊查询：concat('%',#{st_name},'%')或者'%${st_name}%'
+		#{}和${}的区别：
+			#{}相当于对数据加引号（可有效防止sql注入，推荐使用），${}相当于直接显示数据（无法防止sql注入）
+	-->
 	<select id="qryStudentByMultParam" resultType="hashmap">
 		select st_id,st_name,st_age,st_ren,st_others,st_email,st_address
 		from student

@@ -62,6 +62,7 @@ public class Student {
 			return st_sex;
 		}
 		public void setSt_sex(SexEnum st_sex) {
+			System.out.println("setSt_sex="+st_sex.getSexName());
 			this.st_sex = st_sex;
 		}
 		@Override
@@ -69,7 +70,6 @@ public class Student {
 			return "Student [st_id=" + st_id + ", st_name=" + st_name
 					+ ", st_age=" + st_age + ", st_ren=" + st_ren
 					+ ", st_others=" + st_others + ", st_email=" + st_email
-					+ ", st_address=" + st_address 
-					+ ", st_sex=" + st_sex.getSexId() +"]";
+					+ ", st_address=" + st_address +"]";
 		}
 }

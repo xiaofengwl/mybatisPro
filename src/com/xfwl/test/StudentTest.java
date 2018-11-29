@@ -74,7 +74,6 @@ public class StudentTest {
 		Student stu=stundetMapper.qryStudentById(student);
 		System.out.println(stu);
 	}
-	@Test
 	public void qryStudentById2(){//查询数据：by-id
 		initData();
 		StudentMapper stundetMapper=session.getMapper(StudentMapper.class);
@@ -87,6 +86,7 @@ public class StudentTest {
 		List<Student> list=stundetMapper.qryStudentsByName("军");
 		System.out.println(Arrays.toString(list.toArray()));		
 	}
+	@Test
 	public void qryAllStudent(){//查询数据：all
 		initData();
 		StudentMapper stundetMapper=session.getMapper(StudentMapper.class);
