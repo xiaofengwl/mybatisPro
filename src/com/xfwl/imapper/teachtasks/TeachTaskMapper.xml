@@ -2,7 +2,7 @@
 <!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <!-- mapper 为根元素节点， 一个namespace对应一个业务处理类 -->
 <mapper namespace="com.xfwl.imapper.teachtasks.TeachTaskMapper">
-	<!-- resultMap定义教师映射信息 -->
+	<!-- 1.resultMap定义教师映射信息：一对一、一对多 -->
 	<resultMap id="teacherMap" type="teacher" >
 		<id property="t_id" column="t_id"/>
 		<result property="t_name" column="t_name"/>
@@ -13,8 +13,19 @@
 		<association property="tasks" column="t_id"
 		   select="com.xfwl.imapper.teachtasks.TeachTaskMapper.qryTasksByTID"/><!-- 根据教师ID查询教师授课任务信息 -->
 	</resultMap>
+	<!-- 2.resultMap定义教师映射信息：一对一、一对多 -->
+	<resultMap id="teacherMap2" type="teacher" >
+		<id property="t_id" column="t_id"/>
+		<result property="t_name" column="t_name"/>
+		<result property="t_sex" column="t_sex"/>
+		<result property="t_address" column="t_address"/>
+		<association property="card" column="t_id"
+		   select="com.xfwl.imapper.teachtasks.TeachTaskMapper.qryTeacherCardByTID"/><!-- 根据教师ID查询教师登记牌信息 -->
+		<collection property="tasks" column="t_id"  ofType="tCourseTasks"
+			select="com.xfwl.imapper.teachtasks.TeachTaskMapper.qryTasksByTID"/><!-- 根据教师ID查询教师授课任务信息 -->
+	</resultMap>
 	<!-- 根据教师ID查询教师信息 -->
-	<select id="qryTeacherById" parameterType="int" resultMap="teacherMap">
+	<select id="qryTeacherById" parameterType="int" resultMap="teacherMap2">
 		select t_id,t_name,t_sex,t_address
 		from teacher
 		where t_id=#{t_id}
