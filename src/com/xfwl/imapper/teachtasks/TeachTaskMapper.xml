@@ -13,7 +13,7 @@
 		<association property="tasks" column="t_id"
 		   select="com.xfwl.imapper.teachtasks.TeachTaskMapper.qryTasksByTID"/><!-- 根据教师ID查询教师授课任务信息 -->
 	</resultMap>
-	<!-- 2.resultMap定义教师映射信息：一对一、一对多 -->
+	<!-- 2.resultMap定义教师映射信息：一对一、多对多（拆分成2个一对多） -->
 	<resultMap id="teacherMap2" type="teacher" >
 		<id property="t_id" column="t_id"/>
 		<result property="t_name" column="t_name"/>
