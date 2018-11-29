@@ -5,9 +5,11 @@
 
  	<!-- 引入公共的*.properties文件 -->
     <properties resource="db.properties"></properties><!-- 引入数据库连接配置文件 -->
-    <!-- 设置 -->
+    <!-- 设置[全局配置] -->
     <settings>
-    	<setting name="autoMappingBehavior" value="PARTIAL"/><!-- 配置自动映射：默认PARTIAL -->
+    	<setting name="autoMappingBehavior" value="PARTIAL"/><!-- 配置自动映射：默认PARTIAL 驼峰命名法-->
+    	<setting name="lazyLoadingEnabled" value="true"/><!-- 延迟加载配置 -->
+    	<setting name="aggressiveLazyLoading" value="true"/><!--是否采用延迟：层级加载的方式配置 -->
     </settings>    
     <!-- 别名设置 -->
     <typeAliases>
@@ -37,6 +39,7 @@
     <mappers>
         <mapper resource="com/xfwl/imapper/role/RoleMapper.xml"/>
         <mapper resource="com/xfwl/imapper/student/StudentMapper.xml"/>
+        <mapper resource="com/xfwl/imapper/teachtasks/TeachTaskMapper.xml"/>
     </mappers>
  
 </configuration>

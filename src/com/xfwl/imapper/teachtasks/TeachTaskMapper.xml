@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- mapper 为根元素节点， 一个namespace对应一个业务处理类 -->
+<mapper namespace="com.xfwl.imapper.teachtasks.TeachTaskMapper">
+	<!-- resultMap定义教师映射信息 -->
+	<resultMap id="teacherMap" type="teacher" >
+		<id property="t_id" column="t_id"/>
+		<result property="t_name" column="t_name"/>
+		<result property="t_sex" column="t_sex"/>
+		<result property="t_address" column="t_address"/>
+		<association property="card" column="t_id"
+		   select="com.xfwl.imapper.teachtasks.TeachTaskMapper.qryTeacherCardByTID"/><!-- 根据教师ID查询教师登记牌信息 -->
+		<association property="tasks" column="t_id"
+		   select="com.xfwl.imapper.teachtasks.TeachTaskMapper.qryTasksByTID"/><!-- 根据教师ID查询教师授课任务信息 -->
+	</resultMap>
+	<!-- 根据教师ID查询教师信息 -->
+	<select id="qryTeacherById" parameterType="int" resultMap="teacherMap">
+		select t_id,t_name,t_sex,t_address
+		from teacher
+		where t_id=#{t_id}
+	</select>
+	<!-- 根据教师ID查询教师授课任务信息  -->
+	<select id="qryTasksByTID" parameterType="int" resultType="tCourseTasks">
+		select tc_id,tc_teacherId,tc_courseId,tc_date,tc_ren
+		from teach_course_plans
+		where tc_teacherId=#{t_id}
+	</select>
+	<!-- 根据教师ID查询教师登记牌信息  -->
+	<select id="qryTeacherCardByTID" parameterType="int" resultType="card">
+		select cd_no,cd_teacherId,cd_date,cd_ren
+		from card
+		where cd_teacherId=#{t_id}
+	</select>
+	
+</mapper>
